@@ -1,8 +1,7 @@
-# 🗂️ TRY HACK ME - personal collection 
-- 🧑‍💻`\exploited-machines` collection of some THM machines that I was able to compromise.
-- 📖`\notes` collection of notes for every topic of the THM learning path. 
+# 🗂️ MY HACKING COLLECTION 
+- 🧑‍💻`\exploited-machines` collection of some [TryHackMe](https://tryhackme.com/) machines that I was able to compromise.
+- 📖`\notes` collection of notes to get ready for a cybersecurity carreer
 
-https://tryhackme.com/
 
 ## Preliminary steps for exploiting machines
 
