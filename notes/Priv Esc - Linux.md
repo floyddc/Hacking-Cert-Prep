@@ -30,7 +30,7 @@ Some versions of Linux will still allow password hashes to be stored there. We c
   <br><br>
 
 - `/etc/crontab` is a scheduler of scripts. In this file. the user can schedule the cron jobs (programs to run at specific times or interval).
-<img src="../imgs/crontab.png" alt="crontab">
+  <img src="../imgs/crontab.png" alt="crontab">
 
   Example of cron jobs scheduled to run **as root** every minute:
   <img src="../imgs/cronjobseverymin.png" alt="cronjobseverymin">
