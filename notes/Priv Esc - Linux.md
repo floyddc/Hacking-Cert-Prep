@@ -53,7 +53,7 @@ Some versions of Linux will still allow password hashes to be stored there. We c
   cp /bin/bash /tmp/rootbash
   chmod +xs /tmp/rootbash
   ```
-  - This script will copy the `/bin/bash` shell to a temporary directory and will give it execution and suid permissions (it assumes the privileges of the user who owns the file, **root** in this case). In this way, we can run a root shell, so we escalated privileges!
+  - This script will copy the default `/bin/bash` shell to a temporary directory and will give it execution and suid permissions (it assumes the privileges of the user who owns the file, **root** in this case). In this way, we can run a root shell, so we escalated privileges!
   
 
 
