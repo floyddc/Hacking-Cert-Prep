@@ -22,7 +22,7 @@ Some versions of Linux will still allow password hashes to be stored there. We c
   That `/home/diego` is his home directory.<br>
   That `/bin/zsh` is his default shell.
 
-  - `openssl passwd <new password>` to generate a new hashed password and then place it between the first and second `:`, replacing the `x`.
+  - `openssl passwd <new password>` to generate a new hashed password and then place it between the first and second `:`, replacing `x`.
 
 ## /etc/sudoers file
 - `/etc/sudoers` contains info about permissions of users and groups. Its usually readable only by the root user.
