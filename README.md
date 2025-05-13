@@ -1,10 +1,8 @@
 # 🗂️ MY HACKING COLLECTION 
-- 🧑‍💻`\exploited-machines` collection of some [TryHackMe](https://tryhackme.com/) machines that I was able to compromise.
+- 🧑‍💻`\THM-machines` collection of some [TryHackMe](https://tryhackme.com/) machines that I was able to compromise.
 - 📖`\notes` collection of notes to get ready for a cybersecurity carreer
 
-
-## Preliminary steps for exploiting machines
-
+## Preliminary steps for exploiting THM machines
 - Download your VPN connection config file 
   - `Account`->`Access`->`Download configuration file`
 - Connect to the VPN
