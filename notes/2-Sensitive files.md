@@ -1,21 +1,12 @@
 # Privileges Escalation - Linux
+# Sensitive files
 
-## Introductive notes
-`sudo` is a command that can be used only by users specified in `/etc/sudoers` file (see the next paragraph). Everytime a user run commands preceded by `sudo`, he runs it as the **root user**.<br>
-Other useful commands:
-- `sudo -s` to become superuser (**root**).
-- `sudo -u <user> <command>` to run a command impersonating the specified user.
-- `su <user>` to switch between users (password needed).
-- `whoami` to check the current user.
-- `id` to get info about the current user.
-- `sudo -l` to list commands and programs which the current user is allowed to run with `sudo`.
-
-## /etc/sudoers file
+## /etc/sudoers 
 - `/etc/sudoers` contains info about permissions of users and groups. Its usually readable only by the root user. 
 
   <img src="../imgs/sudoers.png" alt="sudoersImg" />
 
-## /etc/shadow file
+## /etc/shadow 
 - `/etc/shadow` contains user password hashes and is usually readable only by the root user.
 
   <img src="../imgs/shadow.png" alt="shadowImg" />
@@ -23,7 +14,7 @@ Other useful commands:
   That complex string between the first and second `:` is the hashed password of user "diego".
   - `mkpasswd -m <algorithm> <new password>` to generate a new hashed password and then replace it.
 
-## /etc/passwd file
+## /etc/passwd 
 - `/etc/passwd` contains info about users. It's world-readable, but usually only writable by the root user. 
 Some versions of Linux will still allow password hashes to be stored there. We could exploit it in the same way of before.
 
@@ -33,7 +24,7 @@ Some versions of Linux will still allow password hashes to be stored there. We c
   That `/home/diego` is his home directory.<br>
   That `/bin/zsh` is his default shell.
 
-## /etc/crontab file
+## /etc/crontab 
 - `/etc/crontab` is a scheduler of scripts. In this file. the user can schedule the cron jobs (programs to run at specific times or interval).
 
   <img src="../imgs/crontab.png" alt="crontab">
