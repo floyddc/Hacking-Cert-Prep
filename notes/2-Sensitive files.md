@@ -5,13 +5,19 @@
 - `/etc/sudoers` contains info about permissions of users and groups. Its usually readable only by the root user. 
 
   <img src="../imgs/sudoers.png" alt="sudoersImg" />
+  
+  If a user is specified under the root line, it means that he's personally allowed to run the **sudo command**. If he's not specified there, he could run the sudo command anyway, belonging to the **sudo group** 
+    - In this first VM, the user _diego_ belongs to _diego_ and _users_ groups, so he shouldn't be able to run the sudo command. But he's specified in sudoers file, so he can do it.<br>
+    <img src="../imgs/groups.png" alt="groupsImg" width="30%"> 
+    - In this second VM, the user _diego_ belongs to many groups, including the _sudo_ group, so he's able to run the sudo command, even without being specified in sudoers file.<br>
+    <img src="../imgs/groups2.png" alt="groupsImg2" width="100%">
 
 ## /etc/shadow 
 - `/etc/shadow` contains user password hashes and is usually readable only by the root user.
 
   <img src="../imgs/shadow.png" alt="shadowImg" />
 
-  That complex string between the first and second `:` is the hashed password of user "diego".
+  That complex string between the first and second `:` is the hashed password of user _diego_.
   - `mkpasswd -m <algorithm> <new password>` to generate a new hashed password and then replace it.
 
 ## /etc/passwd 
@@ -20,7 +26,7 @@ Some versions of Linux will still allow password hashes to be stored there. We c
 
   <img src="../imgs/passwd.png" alt="passwdImg" />
 
-  That `x` means that any hash is set for user "diego."<br>
+  That `x` means that any hash is set for user _diego_.<br>
   That `/home/diego` is his home directory.<br>
   That `/bin/zsh` is his default shell.
 
@@ -50,7 +56,7 @@ Some versions of Linux will still allow password hashes to be stored there. We c
   chmod +xs /tmpdir/rootbash
   ```
   - This script will copy the default `/bin/bash` shell to a temporary directory and will give it execution and suid permissions (it assumes the privileges of the user who owns the file, **root** in this case). In this way, we can run a root shell, so we escalated privileges!
-    - If you type `whoami`, you should read "root".
+    - If you type `whoami`, you should read _root_.
     - You can choose any shell you want (`/bin/bash`, `/bin/sh`, `/bin/zsh`).
 
     ### Local test
