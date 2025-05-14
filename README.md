@@ -1,4 +1,4 @@
-# 🗂️ MY HACKING COLLECTION 
+# 🗂️ COLLECTION TO GET READY FOR HACKING CERTIFICATIONS 
 - 🧑‍💻`\THM-machines` collection of some [TryHackMe](https://tryhackme.com/) machines that I was able to compromise.
 - 📖`\notes` collection of notes to get ready for a cybersecurity carreer
 
