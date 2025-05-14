@@ -7,8 +7,10 @@
   <img src="../imgs/sudoers.png" alt="sudoersImg" />
   
   If a user is specified under the root line, it means that he's personally allowed to run the **sudo command**. If he's not specified there, he could run the sudo command anyway, belonging to the **sudo group** 
+  
     - In this first VM, the user _diego_ belongs to _diego_ and _users_ groups, so he shouldn't be able to run the sudo command. But he's specified in sudoers file, so he can do it.<br>
-    <img src="../imgs/groups.png" alt="groupsImg" width="30%"> 
+    <img src="../imgs/groups.png" alt="groupsImg" width="30%">
+
     - In this second VM, the user _diego_ belongs to many groups, including the _sudo_ group, so he's able to run the sudo command, even without being specified in sudoers file.<br>
     <img src="../imgs/groups2.png" alt="groupsImg2" width="100%">
 
