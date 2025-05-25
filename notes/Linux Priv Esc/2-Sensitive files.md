@@ -4,20 +4,20 @@
 ## /etc/sudoers 
 - `/etc/sudoers` contains info about permissions of users and groups. Its usually readable only by the root user. 
 
-  <img src="../imgs/sudoers.png" alt="sudoersImg" />
+  <img src="./imgs/sudoers.png" alt="sudoersImg" />
   
   If a user is specified under the root line, it means that he's personally allowed to run the **sudo command**. If he's not specified there, he could run the sudo command anyway, belonging to the **sudo group** 
 
     - In this first VM, the user _diego_ belongs to _diego_ and _users_ groups, so he shouldn't be able to run the sudo command. But he's specified in sudoers file, so he can do it.<br>
-    <img src="../imgs/groups.png" alt="groupsImg" width="30%">
+    <img src="./imgs/groups.png" alt="groupsImg" width="30%">
 
     - In this second VM, the user _diego_ belongs to many groups, including the _sudo_ group, so he's able to run the sudo command, even without being specified in sudoers file.<br>
-    <img src="../imgs/groups2.png" alt="groupsImg2" width="100%">
+    <img src="./imgs/groups2.png" alt="groupsImg2" width="100%">
 
 ## /etc/shadow 
 - `/etc/shadow` contains user password hashes and is usually readable only by the root user.
 
-  <img src="../imgs/shadow.png" alt="shadowImg" />
+  <img src="./imgs/shadow.png" alt="shadowImg" />
 
   That complex string between the first and second `:` is the hashed password of user _diego_.
   - `mkpasswd -m <algorithm> <new password>` to generate a new hashed password and then replace it.
@@ -26,7 +26,7 @@
 - `/etc/passwd` contains info about users. It's world-readable, but usually only writable by the root user. 
 Some versions of Linux will still allow password hashes to be stored there. We could exploit it in the same way of before.
 
-  <img src="../imgs/passwd.png" alt="passwdImg" />
+  <img src="./imgs/passwd.png" alt="passwdImg" />
 
   That `x` means that any hash is set for user _diego_.<br>
   That `/home/diego` is his home directory.<br>
@@ -35,11 +35,11 @@ Some versions of Linux will still allow password hashes to be stored there. We c
 ## /etc/crontab 
 - `/etc/crontab` is a scheduler of scripts. In this file. the user can schedule the cron jobs (programs to run at specific times or interval).
 
-  <img src="../imgs/crontab.png" alt="crontab">
+  <img src="./imgs/crontab.png" alt="crontab">
 
   Example of cron jobs scheduled to run **as root** every minute:
   
-  <img src="../imgs/cronjobseverymin.png" alt="cronjobseverymin">
+  <img src="./imgs/cronjobseverymin.png" alt="cronjobseverymin">
    
   - `compress.sh` script will be searched only in `/usr/local/bin` path, because it's explicit. 
   - `overwrite.sh` script will be searched in all paths specified in `PATH` variable, so: `/usr/local/sbin`, `/usr/local/bin`, `/usr/sbin`, `/usr/bin`, `/sbin` and `/bin`. If the shell (`sh` in this case) finds the script, it executes it.
