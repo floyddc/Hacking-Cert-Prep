@@ -12,10 +12,10 @@ Some binaries could be vulnerable to shared objects injections.
 - `strace <BINARY PATH> 2>&1 | grep -iE "open|access|no such file"` to look for missing dependencies.
 - If we find a missing file from an accessible location (for example the `/home` directory), we could create it and place a root shell in it.
 
-## Environment variable
+## Environment variables without full paths
 Some binaries could have readable sequences of characters and they can be exploited, because they inherit the user's PATH environment variable and they attempt to execute programs without specifying an absolute path.
 - `strings <BINARY PATH>` to look for readable ASCII or Unicode characters.
-  - If we find some interesting stuffs like (for example) `system` and `service` without its full path (`/usr/sbin/service`), we can exploit it creating a `.c` program:
+  - If we find some interesting stuffs like (for example) `system` and `service` **without** its full path (`/usr/sbin/service`), we can exploit it creating a `.c` program:
     ```
     int main() {
             setuid(0);  
@@ -31,6 +31,16 @@ Some binaries could have readable sequences of characters and they can be exploi
     - `.` => our current directory.
     - `:$PATH` => join the original path.
   - Now, running the binary we should be able to gain access to a root. shell. Check it with `whoami`.
+
+## Environment variables with full paths and vulnerable shell
+Check the shell version, for example with `/bin/bash --version` (if the shell is Bash). If the version is below 4.2-048, it's vulnerable and we can exploit shell functions with names that resemble file paths.
+- If the previous `service` is defined **with** its full path (`/usr/sbin/service`), we can exploit it through the shell vulnerability.
+- So let's create a custom function that executes bash code:
+  - `function /usr/sbin/service { /bin/bash -p; }` to run a root shell
+  - `export -f /usr/sbin/service`
+- Now, running the binary we should be able to gain access to a root. shell. Check it with `whoami`.
+
+
 
 
 
