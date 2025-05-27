@@ -1,10 +1,26 @@
 # Privileges Escalation - Linux
 # Exploiting SUID/SGID 
 - **SUID**: **Set User ID**. When an executable file has the SUID bit set, anyone who runs it does so with the permissions of the file's owner, usually **root**. Useful for allowing users to run programs that require elevated privileges without giving full root access.
-- **SGID**: ***Set Group ID**. When an executable file has the SGID bit set, anyone who runs it does so with the file's group (not the caller's).
+- **SGID**: **Set Group ID**. When an executable file has the SGID bit set, anyone who runs it does so with the file's group (not the caller's).
 
-## Executables
-- `find / -type f -a \( -perm -u+s -o -perm -g+s \) -exec ls -l {} \; 2>/dev/null` to look for executables, hoping some of them have an obsolete (so vulnerable) version.
+## Finding SUID/SGID executables
+find / -type f -perm /6000 2>/dev/null
+trova exe che abbiano SUID or SGID 
+find / -type f -perm -6000 2>/dev/null
+trova exe che hanno SUID e SGID (entrambi necessariamente)
+find / -type f -perm -4000 2>/dev/null
+trova exe che hanno solo SUID 
+find / -type f -perm -2000 2>/dev/null
+trova exe che hanno solo SGID 
+
+FORMATO RISULTATI LS -L
+<OBJECT TYPE><USER PERMISSIONS>-<GROUP PERMISSIONS> <OWNER> <GROUP> ...
+dove OBJECT TYPE può essere o '.' o 'd' (directory)
+se compare una 's' in USER PERMISSIONS, il file ha il bit SUID
+se compare una 's' in GROUP PERMISSIONS, il file ha il bit SGID
+
+(EQUIVALENTE A /6000)
+- `find / -type f -a \( -perm -u+s -o -perm -g+s \) -exec ls -l {} \; 2>/dev/null` to look for executables, hoping some of them have an obsolete (so vulnerable) version (for example `/usr/sbin/exim-4.84-3`)
 - Search those versions on https://exploit-db.com or somewhere else, for example Github.
 - If we find something interesting, copy the exploit and paste it on a `.sh` file, to make it runnable.
 - Then run it to escalate privileges. Check if we became **root** with `whoami`.
