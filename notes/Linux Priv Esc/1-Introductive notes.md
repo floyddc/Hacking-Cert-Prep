@@ -14,7 +14,8 @@ Other useful commands:
 - `sudo -l` to list commands and programs which the current user is allowed to run with `sudo`.
 
 ## Finding SUID/SGID executables
-- `find / -type f -a \( -perm -u+s -o -perm -g+s \) -exec ls -l {} \; 2> /dev/null`, explained:
+
+- `find / -type f -a \( -perm -u+s -o -perm -g+s \) -exec ls -l {} \; 2>/dev/null`, explained:
   - `find /` finds in the entire filesystem
   - `-type f` only files
   - `-a` and (it links commands)
