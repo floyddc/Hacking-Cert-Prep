@@ -1,5 +1,9 @@
 # Privileges Escalation - Linux
 # Sensitive files
+- [/etc/sudoers](#etc/sudoers)
+- [/etc/shadow](#etc/shadow)
+- [/etc/passwd](#etc/passwd)
+- [/etc/crontab](#etc/crontab)
 
 ## /etc/sudoers 
 - `/etc/sudoers` contains info about permissions of users and groups. Its usually readable only by the root user. 
