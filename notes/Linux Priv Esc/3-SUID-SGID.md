@@ -3,10 +3,10 @@
 
 - [Definitions](#definitions)
 - [Where are these bits?](#wherearethesebits)
-- [Finding SUID/SGID executables](#findexe)
-- [Shared objects vulnerability](#sharedobj)
-- [Environment variables without full paths](#envwithoutpath)
-- [Environment variables with full paths and vulnerable shell](#envwithpathandvulnshell)
+- [Finding SUID/SGID executables](#Finding-SUIDSGID-executables)
+- [Shared objects vulnerability](#Shared-objects-vulnerability)
+- [Environment variables without full paths](#Environment-variables-without-full-paths)
+- [Environment variables with full paths and vulnerable shell](#Environment-variables-with-full-paths-and-vulnerable-shell)
 
 ## Definitions
 - **SUID**: **Set User ID**. When a binary has the SUID bit set, anyone who runs it does so with the permissions of the file's owner, usually **root**. Useful for allowing users to run programs that require elevated privileges without giving full root access.
