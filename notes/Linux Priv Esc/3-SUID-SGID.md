@@ -1,5 +1,14 @@
 # Privileges Escalation - Linux
 # Exploiting SUID/SGID 
+
+- [Definitions](#definitions)
+- [Where are these bits?](#wherearethesebits)
+- [Finding SUID/SGID executables](#findexe)
+- [Shared objects vulnerability](#sharedobj)
+- [Environment variables without full paths](#envwithoutpath)
+- [Environment variables with full paths and vulnerable shell](#envwithpathandvulnshell)
+
+## Definitions
 - **SUID**: **Set User ID**. When a binary has the SUID bit set, anyone who runs it does so with the permissions of the file's owner, usually **root**. Useful for allowing users to run programs that require elevated privileges without giving full root access.
 - **SGID**: **Set Group ID**. When a binary has the SGID bit set, anyone who runs it does so with the file's group (not the caller's).
 
@@ -20,7 +29,7 @@ If we look for binaries and we find an obsolete one (so vulnerable, for example 
 - Copy the exploit and paste it on a `.sh` file, to make it runnable.
 - Then run it to escalate privileges. Check if we became **root** with `whoami`.
 
-## Shared objects
+## Shared objects vulnerability
 Some binaries could be vulnerable to shared objects injections.
 - `strace <Binary Path> 2>&1 | grep -iE "open|access|no such file"` to look for missing dependencies.
 - If we find a missing file from an accessible location (for example the `/home` directory), we could create it and place a root shell in it.
