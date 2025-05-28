@@ -46,7 +46,8 @@ Some binaries could have readable sequences of characters and they can be exploi
   - Now, running the binary we should be able to gain access to a root shell. Check it with `whoami`.
 
 ## Environment variables with full paths and vulnerable shell
-Check the shell version, for example with `/bin/bash --version` (if the shell is Bash). If the version is **below** 4.2-048, it's vulnerable and we can exploit shell functions with names that resemble file paths.
+Check the shell version, for example with `/bin/bash --version` (if the shell is Bash). 
+<br>If the version is **below** 4.2-048, it's vulnerable and we can exploit shell functions with names that resemble file paths.
 - If the previous `service` is defined **with** its full path (`/usr/sbin/service`), we can exploit it through the shell vulnerability.
 - So let's create a custom function that executes bash code:
   - `function /usr/sbin/service { /bin/bash -p; }` to run a root shell
