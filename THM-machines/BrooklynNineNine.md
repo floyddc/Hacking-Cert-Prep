@@ -37,8 +37,8 @@
 ## Privileges escalation
 - Inside the SSH shell:
   - Couldn't access `/root`, so:
-  - `find / -perm -4000 2>/dev/null` to find binaries 
-  - `sudo -l` to discover which binary the active user may run as superuser
+  - `find / -perm -4000 2>/dev/null` to find binaries with the SUID bit set
+  - `sudo -l` to discover which binaries the active user can run as superuser
   - Found `/usr/bin/less`
 - Checked it on https://gtfobins.github.io and found how to exploit the binary
 - Inside the SSH shell:
