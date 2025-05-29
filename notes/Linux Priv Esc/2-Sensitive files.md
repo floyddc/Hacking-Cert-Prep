@@ -23,8 +23,22 @@
 
   <img src="./imgs/shadow.png" alt="shadowImg" />
 
-  That complex string between the first and second `:` is the hashed password of user _diego_.
-  - `mkpasswd -m <algorithm> <new password>` to generate a new hashed password and then replace it.
+  That complex string between the first and second `:` is the hashed password of user _diego_.<br>
+  If we have access to this file, we could use **John the Ripper** to crack the password hash we are interested in. So:
+  - Paste the entire line on a proper file:
+
+    <img src="./imgs/hash.png" alt="hashImg"/>
+
+  - Use a pre-built passwords list or create a new one (I highlighted the correct password):
+
+    <img src="./imgs/passwords_list.png" alt="listImg" width="40%"/>
+
+  - Modern hashes are made with **yescrypt** algorithm, so we have to specify it when we run John: `john --format=crypt --wordlist=<Password list> <Hash file>`
+
+    <img src="./imgs/john.png" alt="johnImg">
+  
+  Found passwords are stored in `john.pot` file.
+
 
 ## /etc/passwd 
 - `/etc/passwd` contains info about users. It's world-readable, but usually only writable by the root user. 
