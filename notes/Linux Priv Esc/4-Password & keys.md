@@ -1,6 +1,9 @@
 # Privileges Escalation - Linux
 # Discovering passwords and keys
 
+- [Local history inspection](#local-history-inspection)
+- [Hidden files inspection](#hidden-files-inspection)
+
 ## Local history inspection
 - `cat ~/.*history` to read the history of typed commands.
 
