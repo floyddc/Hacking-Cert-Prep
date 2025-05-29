@@ -40,8 +40,8 @@ Some binaries could have readable sequences of characters and they can be exploi
   - We can exploit it creating a `.c` program:
     ```
     int main() {
-            setuid(0);  
-            system("/bin/bash -p"); 
+      setuid(0);  
+      system("/bin/bash -p"); 
     }
     ```
     In which:
