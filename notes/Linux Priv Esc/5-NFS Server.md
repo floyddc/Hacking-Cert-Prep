@@ -1,5 +1,5 @@
 # Privileges Escalation - Linux
-# NFS Server exploitation
+# NFS Server exploitation..
 
 When we're inside the target machine, we have to check if it's an **NFS (Network File System) server**, in which we could mount locally directories from remote and try to exploit the NFS vulnerability (if there's one).
 
