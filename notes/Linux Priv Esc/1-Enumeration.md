@@ -19,7 +19,6 @@ During this first step, we are going to get some preliminaries info about the sy
 - `hostname` to check the hostname. In some cases, it can provide useful info about the target.
 - `uname -a` to get info about the kernel.
 - `cat /proc/version` (similar to the previous command) to get the kernel version and check which compiler (GCC) is installed. 
-  - **Vulnerabilities databases**: https://exploit-db.com or https://cvedetails.com/
 - `cat /etc/issue` to check the version of the Operating System.
 - `env` to check the environments variables, the default shell... (if the PATH variable includes a compiler or a scripting language, it could be exploited to run code with high privileges)
 
