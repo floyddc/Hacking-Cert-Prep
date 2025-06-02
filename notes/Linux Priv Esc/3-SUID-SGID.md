@@ -30,7 +30,9 @@ If we look for binaries and we find an obsolete one (so vulnerable, for example 
 - Then run it to escalate privileges. Check if we became **root** with `whoami`.
 
 ### Very useful binary to read every file we want
-If the binary `/usr/bin/base64` has the SUID bit set, we can exploit it to read non-accessible files. Check how to do that on https://gtfobins.github.io
+If the binary `/usr/bin/base64` has the SUID bit set, we can exploit it to read non-accessible files. Following what https://gtfobins.github.io says, we have to do:
+- `LFILE=<File to read (with absolute path)>`.
+- `/usr/bin/base64 "$LFILE" | base64 --decode`.
 
 ## Shared objects vulnerability
 Some binaries could be vulnerable to shared objects injections.
