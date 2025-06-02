@@ -29,6 +29,9 @@ If we look for binaries and we find an obsolete one (so vulnerable, for example 
 - Copy the exploit and paste it on a `.sh` file, to make it runnable.
 - Then run it to escalate privileges. Check if we became **root** with `whoami`.
 
+### Very useful binary to read every file we want
+If the binary `/usr/bin/base64` has the SUID bit set, we can exploit it to read non-accessible files. Check how to do that on https://gtfobins.github.io
+
 ## Shared objects vulnerability
 Some binaries could be vulnerable to shared objects injections.
 - `strace <Binary Path> 2>&1 | grep -iE "open|access|no such file"` to look for missing dependencies.
