@@ -33,7 +33,7 @@
 
     <img src="./imgs/passwords_list.png" alt="listImg" width="40%"/>
 
-  - Modern hashes are made with **yescrypt** algorithm, so we have to specify it when we run John: `john --format=crypt --wordlist=<Password list> <Hash file>`
+  - Modern hashes are made with **yescrypt** algorithm, so we have to specify it when we run John: `john --format=crypt --wordlist=<Password list> <Hash file>`. If it's an easy hash, we can use just `john <Hash file`.
 
     <img src="./imgs/john.png" alt="johnImg">
   
