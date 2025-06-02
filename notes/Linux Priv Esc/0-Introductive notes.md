@@ -16,6 +16,7 @@
 - `sudo -l` to list commands and programs which the current user is allowed to run with `sudo`.
 
 ## Vulnerabilities databases: 
+- Metasploit framework
 - https://exploit-db.com 
 - https://cvedetails.com/
 - https://gtfobins.github.io/

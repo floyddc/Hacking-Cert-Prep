@@ -18,7 +18,7 @@ During this first step, we are going to get some preliminaries info about the sy
 ## System
 - `hostname` to check the hostname. In some cases, it can provide useful info about the target.
 - `uname -a` to get info about the kernel.
-- `cat /proc/version` (similar to the previous command) to get the kernel version and check which compiler (GCC) is installed. 
+- `cat /proc/version` (similar to the previous command) to get the kernel version and check which compiler (GCC) is installed. ([see Kernel exploitation](1.1-(Ex)%20Kernel%20exploitation.md))
 - `cat /etc/issue` to check the version of the Operating System.
 - `env` to check the environments variables, the default shell... (if the PATH variable includes a compiler or a scripting language, it could be exploited to run code with high privileges)
 
