@@ -1,4 +1,4 @@
-# BrooklynNineNine - solution
+# RootMe - solution
 - Link: https://tryhackme.com/room/rrootme
 - Difficulty: `easy`
 
